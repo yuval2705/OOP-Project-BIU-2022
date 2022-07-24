@@ -1,6 +1,5 @@
 /**
  * The interface Collidable.
- * dadadadad
  */
 public interface ICollidable {
 

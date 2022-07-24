@@ -61,6 +61,10 @@ public class Line {
      * @return the boolean
      */
     public boolean isIntersecting(Line other) {
+        //using a known algorithm to calculate if there is an intersection point of to lines
+        //link for the algorithm:
+        //https://en.wikipedia.org/wiki/Line–line_intersection#Given_two_points_on_each_line_segment
+        //calculating the variables of the algorithm
         double dinominator = (this.start.getX() - this.end.getX()) * (other.getStart().getY() - other.getEnd().getY())
                 - (this.start.getY() - this.end.getY()) * (other.getStart().getX() - other.getEnd().getX());
         if (dinominator == 0) {
@@ -90,6 +94,10 @@ public class Line {
         if (!this.isIntersecting(other)) {
             return null;
         }
+        //using a known algorithm to calculate if there is an intersection point of to lines
+        //link for the algorithm:
+        //https://en.wikipedia.org/wiki/Line–line_intersection#Given_two_points_on_each_line_segment
+        //calculating the variables of the algorithm
         double dinominator = (this.start.getX() - this.end.getX()) * (other.getStart().getY() - other.getEnd().getY())
                 - (this.start.getY() - this.end.getY()) * (other.getStart().getX() - other.getEnd().getX());
 
