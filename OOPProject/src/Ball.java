@@ -68,12 +68,14 @@ public class Ball {
                 this.center.getX() + this.velocity.getDx(), this.center.getY() + this.velocity.getDy());
         CollisionInfo collisionInfo = this.environment.getClosestCollision(trajectory);
         if (collisionInfo == null) {
+            System.out.println("null");
             this.center = this.velocity.applyToPoint(this.center);
             return;
         }
+        System.out.println(collisionInfo.collisionPoint().toString());
         this.center = collisionInfo.collisionPoint();
         this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(), this.velocity);
-
+        this.center = this.velocity.applyToPoint(this.center);
     }
 
     /**

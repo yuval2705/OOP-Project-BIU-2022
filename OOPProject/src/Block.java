@@ -14,7 +14,9 @@ public class Block implements ICollidable {
      * @param drawSurface the draw surface
      */
     public void drawOn(DrawSurface drawSurface) {
-        this.rectangle.drawOn(drawSurface);
+        if (rectangle != null) {
+            this.rectangle.drawOn(drawSurface);
+        }
     }
 
     /**
@@ -40,16 +42,13 @@ public class Block implements ICollidable {
     }
     @Override
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
-        Line[] sides = this.rectangle.getSides();
-        Velocity v = new Velocity(currentVelocity);
-        Line collisionLine = new Line(collisionPoint, collisionPoint);
-
-        if (sides[0].isIntersecting(collisionLine) || sides[2].isIntersecting(collisionLine)) {
-            v.setDy(-v.getDy());
+        if (collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
+                || collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
+                + this.rectangle.getWidth()) {
+            //this.rectangle = null;
+            return new Velocity(-currentVelocity.getDx(), currentVelocity.getDy());
         }
-        if (sides[1].isIntersecting(collisionLine) || sides[3].isIntersecting(collisionLine)) {
-            v.setDx(-v.getDx());
-        }
-        return v;
+        //this.rectangle = null;
+        return new Velocity(currentVelocity.getDx(), -currentVelocity.getDy());
     }
 }

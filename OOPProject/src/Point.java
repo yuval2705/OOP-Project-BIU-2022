@@ -77,6 +77,11 @@ public class Point {
         return Math.sqrt(distanceX + distanceY);
     }
 
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ")";
+    }
+
     /**
      * Equals boolean.
      *

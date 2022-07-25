@@ -109,7 +109,7 @@ public class Rectangle {
 
         Line left = new Line(this.point, new Point(this.point.getX(), this.point.getY() + this.getHeight()));
         //
-        Line right = new Line(new Point(this.point.getY(), this.point.getX() + this.width),
+        Line right = new Line(new Point(this.point.getX() + this.width, this.point.getY()),
                 new Point(this.point.getX() + this.width, this.point.getY() + this.getHeight()));
         //
         Line top = new Line(this.point, new Point(this.point.getX() + this.width, this.point.getY()));

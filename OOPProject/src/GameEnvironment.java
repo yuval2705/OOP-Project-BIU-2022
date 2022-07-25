@@ -59,7 +59,7 @@ public class GameEnvironment {
         //create a point and CollidableAndSpriteObjects.Collidable to save the collidable and the point.
         Point closest = null;
         ICollidable c1 = null;
-        //foreach CollidableAndSpriteObjects.Collidable of these collidable
+        //foreach Collidable of these collidable
         for (ICollidable c: this.collidables) {
             //we'll get that rectangle.
             Rectangle rect = c.getCollisionRectangle();
@@ -69,7 +69,7 @@ public class GameEnvironment {
             while (!lst1.isEmpty()) {
                 if (closest == null) {
                     /*
-                     * if it isn't empty, we'll set that CollidableAndSpriteObjects.Collidable as the current
+                     * if it isn't empty, we'll set that Collidable. Collidable as the current
                      * collidable and the point as current closest.
                      */
                     closest = new Point(lst1.remove(0));
@@ -91,6 +91,4 @@ public class GameEnvironment {
         //we'll return the new Collision info.
         return new CollisionInfo(closest, c1);
     }
-
-
 }

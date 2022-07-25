@@ -20,10 +20,10 @@ public class SimpleGuiExample {
         int width = 1500;
         int height = 920;
 
-        GUI gui = new GUI("Multiple Bouncing Balls Animation!", width, height);
+        GUI gui = new GUI("Balls Animation!", width, height);
         Sleeper sleeper = new Sleeper();
         Ball ball = new Ball(100, 100, 4, Color.BLACK);
-        ball.setVelocity(3, 3);
+        ball.setVelocity(4, 3);
         ball.setGameEnvironment(environment);
 
         //getting the two borders of the balls
@@ -33,7 +33,7 @@ public class SimpleGuiExample {
         environment.addCollidble(new Block(new Rectangle(new Point(0, 0), 10, 200)));
         environment.addCollidble(new Block(new Rectangle(new Point(0, 0), 200, 10)));
         environment.addCollidble(new Block(new Rectangle(new Point(0, 200), 200, 10)));
-
+        //
         while (true) {
             DrawSurface d = gui.getDrawSurface();
             //drawing the two rectangles
