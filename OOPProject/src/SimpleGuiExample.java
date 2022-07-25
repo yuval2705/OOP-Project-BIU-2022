@@ -29,10 +29,10 @@ public class SimpleGuiExample {
         //getting the two borders of the balls
         Rectangle rect = new Rectangle(new Point(200, 0), 10, 200);
         Block b = new Block(rect);
-        environment.addCollidble(b);
-        environment.addCollidble(new Block(new Rectangle(new Point(0, 0), 10, 200)));
-        environment.addCollidble(new Block(new Rectangle(new Point(0, 0), 200, 10)));
-        environment.addCollidble(new Block(new Rectangle(new Point(0, 200), 200, 10)));
+        environment.addCollidable(b);
+        environment.addCollidable(new Block(new Rectangle(new Point(0, 0), 10, 200)));
+        environment.addCollidable(new Block(new Rectangle(new Point(0, 0), 200, 10)));
+        environment.addCollidable(new Block(new Rectangle(new Point(0, 200), 200, 10)));
         //
         while (true) {
             DrawSurface d = gui.getDrawSurface();

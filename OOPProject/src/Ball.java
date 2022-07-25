@@ -3,7 +3,7 @@ import biuoop.DrawSurface;
 /**
  * The type Ball.
  */
-public class Ball {
+public class Ball implements Sprite {
     private Point center;
     private int r;
     private java.awt.Color color;
@@ -68,11 +68,9 @@ public class Ball {
                 this.center.getX() + this.velocity.getDx(), this.center.getY() + this.velocity.getDy());
         CollisionInfo collisionInfo = this.environment.getClosestCollision(trajectory);
         if (collisionInfo == null) {
-            System.out.println("null");
             this.center = this.velocity.applyToPoint(this.center);
             return;
         }
-        System.out.println(collisionInfo.collisionPoint().toString());
         this.center = collisionInfo.collisionPoint();
         this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(), this.velocity);
         this.center = this.velocity.applyToPoint(this.center);
@@ -196,5 +194,15 @@ public class Ball {
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
         surface.fillCircle(this.getX(), this.getY(), this.r);
+    }
+
+    @Override
+    public void timePassed() {
+        this.moveOneStep();
+    }
+
+    @Override
+    public void addToGame(Game g) {
+        g.addSprite(this);
     }
 }

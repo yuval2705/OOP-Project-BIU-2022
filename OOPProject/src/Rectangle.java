@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import biuoop.DrawSurface;
@@ -9,6 +10,7 @@ public class Rectangle {
     private Point point;
     private double width;
     private double height;
+    private Color color;
 
     /**
      * Draw on.
@@ -16,7 +18,12 @@ public class Rectangle {
      * @param drawSurface the draw surface
      */
     public void drawOn(DrawSurface drawSurface) {
+        drawSurface.setColor(this.color);
         drawSurface.fillRectangle((int) this.point.getX(), (int) this.point.getY(),
+                (int) this.width, (int) this.height);
+        //
+        drawSurface.setColor(Color.BLACK);
+        drawSurface.drawRectangle((int) this.point.getX(), (int) this.point.getY(),
                 (int) this.width, (int) this.height);
     }
 
@@ -85,6 +92,22 @@ public class Rectangle {
         this.point = point;
         this.height = height;
         this.width = width;
+        this.color = Color.BLACK;
+    }
+
+    /**
+     * Instantiates a new Rectangle.
+     *
+     * @param point  the point
+     * @param width  the width
+     * @param height the height
+     * @param color  the color
+     */
+    public Rectangle(Point point, double width, double height, Color color) {
+        this.point = point;
+        this.height = height;
+        this.width = width;
+        this.color = color;
     }
 
     /**
@@ -152,4 +175,43 @@ public class Rectangle {
         return sides;
     }
 
+    /**
+     * Gets color.
+     *
+     * @return the color
+     */
+    public Color getColor() {
+        return this.color;
+    }
+
+    /**
+     * Sets color.
+     *
+     * @param color the color
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
+     * Get points point [ ].
+     *
+     * @return the point [ ]
+     */
+    public Point[] getPoints() {
+        Point[] points = new Point[4];
+        Point point = new Point(this.point);
+        points[0] = new Point(point);
+        //
+        point.setX(point.getX() + this.width);
+        points[1] = new Point(point);
+        //
+        point.setY(point.getY() + this.height);
+        points[2] = new Point(point);
+        //
+        point.setX(point.getX() - this.width);
+        points[3] = new Point(point);
+        //
+        return points;
+    }
 }

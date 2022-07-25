@@ -18,6 +18,13 @@ public class GameEnvironment {
     }
 
     /**
+     * Instantiates a new Game environment.
+     */
+    public GameEnvironment() {
+        this.collidables = new ArrayList<ICollidable>();
+    }
+
+    /**
      * Gets collidables.
      *
      * @return the collidables
@@ -31,7 +38,7 @@ public class GameEnvironment {
      *
      * @param c the c
      */
-    public void addCollidble(ICollidable c) {
+    public void addCollidable(ICollidable c) {
         if (this.collidables == null) {
             this.collidables = new ArrayList<ICollidable>();
         }
