@@ -88,6 +88,15 @@ public class Rectangle {
     }
 
     /**
+     * Gets point.
+     *
+     * @return the point
+     */
+    public Point getPoint() {
+        return this.point;
+    }
+
+    /**
      * Intersection points java . util . list.
      *
      * @param line the line

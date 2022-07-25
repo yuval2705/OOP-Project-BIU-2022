@@ -9,7 +9,7 @@ public class Ball {
     private java.awt.Color color;
     private Velocity velocity;
 
-    private GameEnvironment gameEnvironment;
+    private GameEnvironment environment;
 
     /**
      * Gets game environment.
@@ -17,7 +17,7 @@ public class Ball {
      * @return the game environment
      */
     public GameEnvironment getGameEnvironment() {
-        return this.gameEnvironment;
+        return this.environment;
     }
 
     /**
@@ -26,7 +26,7 @@ public class Ball {
      * @param gameEnvironment the game environment
      */
     public void setGameEnvironment(GameEnvironment gameEnvironment) {
-        this.gameEnvironment = gameEnvironment;
+        this.environment = gameEnvironment;
     }
 
     /**
@@ -55,6 +55,20 @@ public class Ball {
      */
     public Velocity getVelocity() {
         return this.velocity;
+    }
+
+    public Line traj
+    /**
+     * Move one step.
+     *
+     * @param collidable the collidable
+     */
+    public void  moveOneStep(ICollidable collidable) {
+        Rectangle rect = collidable.getCollisionRectangle();
+        double xRight = rect.getPoint().getX();
+        double xLeft = rect.getPoint().getX() + rect.getWidth();
+        , int yTop, int yBottom
+
     }
 
     /**
