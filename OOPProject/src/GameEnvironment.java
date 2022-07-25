@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import biuoop.DrawSurface;
 
 /**
  * The type Game environment.
@@ -35,6 +36,17 @@ public class GameEnvironment {
             this.collidables = new ArrayList<ICollidable>();
         }
         this.collidables.add(c);
+    }
+
+    /**
+     * Draw on.
+     *
+     * @param drawSurface the draw surface
+     */
+    public void drawOn(DrawSurface drawSurface) {
+        for (ICollidable i:this.collidables) {
+            i.getCollisionRectangle().drawOn(drawSurface);
+        }
     }
 
     /**

@@ -40,10 +40,16 @@ public class Block implements ICollidable {
     }
     @Override
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
-        currentVelocity.setDx(-currentVelocity.getDx());
-        currentVelocity.setDy(-currentVelocity.getDy());
-        collisionPoint.setX(collisionPoint.getX() + currentVelocity.getDx());
-        collisionPoint.setY(collisionPoint.getY() + currentVelocity.getDy());
-        return currentVelocity;
+        Line[] sides = this.rectangle.getSides();
+        Velocity v = new Velocity(currentVelocity);
+        Line collisionLine = new Line(collisionPoint, collisionPoint);
+
+        if (sides[0].isIntersecting(collisionLine) || sides[2].isIntersecting(collisionLine)) {
+            v.setDy(-v.getDy());
+        }
+        if (sides[1].isIntersecting(collisionLine) || sides[3].isIntersecting(collisionLine)) {
+            v.setDx(-v.getDx());
+        }
+        return v;
     }
 }

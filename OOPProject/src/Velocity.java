@@ -17,6 +17,16 @@ public class Velocity {
     }
 
     /**
+     * Instantiates a new Velocity.
+     *
+     * @param velocity the velocity
+     */
+    public Velocity(Velocity velocity) {
+        this.dx = velocity.getDx();
+        this.dy = velocity.getDy();
+    }
+
+    /**
      * Gets dx.
      *
      * @return the dx
@@ -55,6 +65,7 @@ public class Velocity {
     /**
      * From angle and speed velocity.
      * Gets and angle and speed and returning a new velocity object according to the angle and speed
+     *
      * @param angle the angle
      * @param speed the speed
      * @return the velocity
@@ -68,6 +79,7 @@ public class Velocity {
 
     /**
      * Apply to point point.
+     *
      * @param p the p
      * @return the point
      */

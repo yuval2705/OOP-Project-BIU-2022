@@ -56,18 +56,23 @@ public class Ball {
     public Velocity getVelocity() {
         return this.velocity;
     }
-
-    public Line traj
     /**
      * Move one step.
      *
-     * @param collidable the collidable
      */
-    public void  moveOneStep(ICollidable collidable) {
-        Rectangle rect = collidable.getCollisionRectangle();
-        double xRight = rect.getPoint().getX();
-        double xLeft = rect.getPoint().getX() + rect.getWidth();
-        , int yTop, int yBottom
+    public void  moveOneStep() {
+        if (this.velocity == null) {
+            return;
+        }
+        Line trajectory = new Line(this.center.getX(), this.center.getY(),
+                this.center.getX() + this.velocity.getDx(), this.center.getY() + this.velocity.getDy());
+        CollisionInfo collisionInfo = this.environment.getClosestCollision(trajectory);
+        if (collisionInfo == null) {
+            this.center = this.velocity.applyToPoint(this.center);
+            return;
+        }
+        this.center = collisionInfo.collisionPoint();
+        this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(), this.velocity);
 
     }
 
@@ -117,15 +122,6 @@ public class Ball {
             moveOneStep();
         }
     }
-
-    /**
-     * Move one step.
-     * sets the new center of the ball according to his velocity
-     */
-    public void moveOneStep() {
-        this.center = this.getVelocity().applyToPoint(this.center);
-    }
-
     /**
      * Instantiates a new Ball.
      *

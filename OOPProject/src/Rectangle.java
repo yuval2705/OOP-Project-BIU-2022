@@ -132,4 +132,24 @@ public class Rectangle {
         return pointsList;
     }
 
+    /**
+     * Get sides line [ ].
+     *
+     * @return the line [ ]
+     */
+    public Line[] getSides() {
+        Line[] sides = new Line[4];
+
+        Point p1 = new Point(this.getUpperLeft());
+        Point p2 = new Point(this.getUpperLeft().getX() + this.width, this.getUpperLeft().getY());
+        Point p3 = new Point(this.getUpperLeft().getX() + this.width, this.getUpperLeft().getY() + this.height);
+        Point p4 = new Point(this.getUpperLeft().getX(), this.getUpperLeft().getY() + this.height);
+        //
+        sides[0] = new Line(p1, p2);
+        sides[1] = new Line(p2, p3);
+        sides[2] = new Line(p3, p4);
+        sides[3] = new Line(p4, p1);
+        return sides;
+    }
+
 }

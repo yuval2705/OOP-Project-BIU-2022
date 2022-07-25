@@ -17,6 +17,19 @@ public class Line {
     }
 
     /**
+     * Instantiates a new Line.
+     *
+     * @param x  the x
+     * @param y  the y
+     * @param v  the v
+     * @param v1 the v 1
+     */
+    public Line(double x, double y, double v, double v1) {
+        this.start = new Point(x, y);
+        this.end = new Point(v, v1);
+    }
+
+    /**
      * Gets start.
      *
      * @return the start
