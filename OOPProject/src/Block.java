@@ -1,9 +1,21 @@
+import biuoop.DrawSurface;
+
 /**
  * The type Block.
  */
 public class Block implements ICollidable {
 
     private Rectangle rectangle;
+
+
+    /**
+     * Draw on.
+     *
+     * @param drawSurface the draw surface
+     */
+    public void drawOn(DrawSurface drawSurface) {
+        this.rectangle.drawOn(drawSurface);
+    }
 
     /**
      * Instantiates a new Block.

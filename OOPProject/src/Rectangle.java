@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import biuoop.DrawSurface;
 
 /**
  * The type Rectangle.
@@ -8,6 +9,16 @@ public class Rectangle {
     private Point point;
     private double width;
     private double height;
+
+    /**
+     * Draw on.
+     *
+     * @param drawSurface the draw surface
+     */
+    public void drawOn(DrawSurface drawSurface) {
+        drawSurface.fillRectangle((int) this.point.getX(), (int) this.point.getY(),
+                (int) this.width, (int) this.height);
+    }
 
     /**
      * Sets point.

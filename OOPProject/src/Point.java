@@ -17,6 +17,16 @@ public class Point {
     }
 
     /**
+     * Instantiates a new Point.
+     *
+     * @param point the point
+     */
+    public Point(Point point) {
+        this.x = point.getX();
+        this.y = point.getY();
+    }
+
+    /**
      * Gets x.
      *
      * @return the x

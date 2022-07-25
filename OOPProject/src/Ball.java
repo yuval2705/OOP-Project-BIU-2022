@@ -9,6 +9,26 @@ public class Ball {
     private java.awt.Color color;
     private Velocity velocity;
 
+    private GameEnvironment gameEnvironment;
+
+    /**
+     * Gets game environment.
+     *
+     * @return the game environment
+     */
+    public GameEnvironment getGameEnvironment() {
+        return this.gameEnvironment;
+    }
+
+    /**
+     * Sets game environment.
+     *
+     * @param gameEnvironment the game environment
+     */
+    public void setGameEnvironment(GameEnvironment gameEnvironment) {
+        this.gameEnvironment = gameEnvironment;
+    }
+
     /**
      * Sets velocity.
      *
@@ -40,6 +60,7 @@ public class Ball {
     /**
      * Move one step.
      * Moves the ball according to his velocity
+     *
      * @param xRight  the right border of the box
      * @param xLeft   the left border of the box
      * @param yTop    the top border of the box
