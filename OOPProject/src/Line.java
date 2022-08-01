@@ -142,5 +142,26 @@ public class Line {
         }
         return true;
     }
+
+    /**
+     * Is zero boolean.
+     *
+     * @param a the a
+     * @return the boolean
+     */
+    public boolean isZero(double a) {
+        return Math.abs(a) <= Math.pow(10, -10);
+    }
+
+    /**
+     * Is on line boolean.
+     *
+     * @param p the p
+     * @return the boolean
+     */
+    public boolean isOnLine(Point p) {
+        //check triangle inequality.
+        return this.isZero(p.distance(this.start) + p.distance(this.end) - this.length());
+    }
 }
 
