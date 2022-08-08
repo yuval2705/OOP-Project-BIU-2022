@@ -34,7 +34,7 @@ public class Block implements ICollidable, Sprite {
     /**
      * Add to game.
      *
-     * @param g the g
+     * @param g the game
      */
     @Override
     public void addToGame(Game g) {
@@ -93,7 +93,7 @@ public class Block implements ICollidable, Sprite {
     @Override
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
         Point[] corners = this.rectangle.getPoints();
-        //
+        //checks for a point if it is on the rectangle sides
         if (collisionPoint.equals(corners[0]) || collisionPoint.equals(corners[1])
                 || collisionPoint.equals(corners[2]) || collisionPoint.equals(corners[3])) {
             //

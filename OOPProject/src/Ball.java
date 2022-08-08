@@ -80,24 +80,21 @@ public class Ball implements Sprite {
      * Move one step 1.
      */
     public void moveOneStep() {
-        //if it isn't inside the paddle, we'll check for collisions with collidables.
         Velocity v = this.getVelocity();
         Line l = new Line(new Point(this.center), new Point(this.center.getX() + v.getDx(), this.center.getY()
                 + v.getDy()));
         CollisionInfo c = this.environment.getClosestCollision(l);
-        //if it has a collision with an object, it means c != null so we'll do what's inside the block.
+        //
+        //checks if there was a collision with an object.
         if (c != null) {
-            //we'll get the collision object and from it the collision rectangle and by that.
+            //get the collision rectangle from the collision object.
             ICollidable c1 = c.collisionObject();
             this.velocity = c1.hit(c.collisionPoint(), this.velocity);
             Rectangle rect = c1.getCollisionRectangle();
-            //now, we'll get the lines of the sides of the rectangle to check where was the collision.
+            //
+            //get the sides of the rectangle to check if or where the collision happened.
             Line[] sides = rect.getSides();
-            /*
-             * sides[0] means the upper, sides[1] the righter, sides[2] the downer, and sides[3] the lefter,
-             * by that update the velocity and the center of the ball. We also have to check if it's on intersection
-             * of two sides that have a similar point between them.
-             */
+            //checks for a collision in every side.
             if (sides[0].isOnLine(c.collisionPoint()) && sides[1].isOnLine(c.collisionPoint())) {
                 this.center = new Point(c.collisionPoint().getX() + this.r, c.collisionPoint().getY()
                         - this.r);
@@ -117,7 +114,7 @@ public class Ball implements Sprite {
                         c.collisionPoint().getY());
             } else if (sides[2].isOnLine(c.collisionPoint())) {
                 this.center = new Point(c.collisionPoint().getX(), c.collisionPoint().getY() + this.r);
-            } else { //it means it's on the sides[3].
+            } else { //the collision is on the last side.
                 this.center = new Point(c.collisionPoint().getX() - this.r + this.velocity.getDx(),
                         c.collisionPoint().getY());
             }
