@@ -24,7 +24,7 @@ public class CollisionInfo {
     /**
      * Collision point point.
      *
-     * @return the point
+     * @return the collision point
      */
     public Point collisionPoint() {
         return this.collisionPoint;
@@ -33,7 +33,7 @@ public class CollisionInfo {
     /**
      * Collision object collidable.
      *
-     * @return the collidable
+     * @return the collidable object
      */
     public ICollidable collisionObject() {
         return this.collisionObject;

@@ -39,6 +39,7 @@ public class GameEnvironment {
      * @param c the c
      */
     public void addCollidable(ICollidable c) {
+        //
         if (this.collidables == null) {
             this.collidables = new ArrayList<ICollidable>();
         }

@@ -29,11 +29,12 @@ public class SimpleGuiExample {
         //getting the two borders of the balls
         Rectangle rect = new Rectangle(new Point(200, 0), 10, 200);
         Block b = new Block(rect);
+        //adds Collidable callable object to the environment
         environment.addCollidable(b);
         environment.addCollidable(new Block(new Rectangle(new Point(0, 0), 10, 200)));
         environment.addCollidable(new Block(new Rectangle(new Point(0, 0), 200, 10)));
         environment.addCollidable(new Block(new Rectangle(new Point(0, 200), 200, 10)));
-        //
+        //the animation
         while (true) {
             DrawSurface d = gui.getDrawSurface();
             //drawing the two rectangles

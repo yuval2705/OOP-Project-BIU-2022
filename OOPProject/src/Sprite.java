@@ -19,7 +19,7 @@ public interface Sprite {
     void timePassed();
 
     /**
-     * Add to game.
+     * Add the sprite to a game.
      *
      * @param g the g
      */

@@ -46,7 +46,7 @@ public class SpriteCollection {
     }
 
     /**
-     * Draw all on.
+     * Draw all the sprites on the draw surface.
      *
      * @param drawSurface the draw surface
      */

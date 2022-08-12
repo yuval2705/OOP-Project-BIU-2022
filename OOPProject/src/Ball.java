@@ -96,17 +96,17 @@ public class Ball implements Sprite {
             Line[] sides = rect.getSides();
             //checks for a collision in every side.
             if (sides[0].isOnLine(c.collisionPoint()) && sides[1].isOnLine(c.collisionPoint())) {
-                this.center = new Point(c.collisionPoint().getX() + this.r, c.collisionPoint().getY()
-                        - this.r);
+                this.center = new Point(c.collisionPoint().getX() + this.r,
+                        c.collisionPoint().getY() - this.r);
             } else if (sides[1].isOnLine(c.collisionPoint()) && sides[2].isOnLine(c.collisionPoint())) {
-                this.center = new Point(c.collisionPoint().getX() + this.r, c.collisionPoint().getY()
-                        + this.r);
+                this.center = new Point(c.collisionPoint().getX() + this.r,
+                        c.collisionPoint().getY() + this.r);
             } else if (sides[2].isOnLine(c.collisionPoint()) && sides[3].isOnLine(c.collisionPoint())) {
-                this.center = new Point(c.collisionPoint().getX() - this.r, c.collisionPoint().getY()
-                        + this.r);
+                this.center = new Point(c.collisionPoint().getX() - this.r,
+                        c.collisionPoint().getY() + this.r);
             } else if (sides[0].isOnLine(c.collisionPoint()) && sides[3].isOnLine(c.collisionPoint())) {
-                this.center = new Point(c.collisionPoint().getX() - this.r, c.collisionPoint().getY()
-                        - this.r);
+                this.center = new Point(c.collisionPoint().getX() - this.r,
+                        c.collisionPoint().getY() - this.r);
             } else if (sides[0].isOnLine(c.collisionPoint())) {
                 this.center = new Point(c.collisionPoint().getX(), c.collisionPoint().getY() - this.r);
             } else if (sides[1].isOnLine(c.collisionPoint())) {

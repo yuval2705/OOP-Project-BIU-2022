@@ -1,6 +1,6 @@
 import biuoop.DrawSurface;
 import java.awt.Color;
-
+//
 /**
  * The type Paddle.
  */

@@ -157,7 +157,7 @@ public class Rectangle {
 
     /**
      * Get sides line [ ].
-     *
+     * gets the line objects that represent the sides of the rectangle
      * @return the line [ ]
      */
     public Line[] getSides() {
@@ -195,7 +195,7 @@ public class Rectangle {
 
     /**
      * Get points point [ ].
-     *
+     * gets the edge points of the rectangle
      * @return the point [ ]
      */
     public Point[] getPoints() {
