@@ -50,8 +50,8 @@ public class MultipleBouncingBallsAnimation {
     public static Ball createRandomBall(int radius, int xRight, int xLeft, int yTop, int yBottom) {
         Random rnd = new Random();
         //gets the random starting place of the ball
-        double x = rnd.nextDouble(xLeft, xRight + 1);
-        double y = rnd.nextDouble(yTop, yBottom + 1);
+        double x = rnd.nextDouble(xLeft - xRight) + xRight;
+        double y = rnd.nextDouble(yBottom - yTop) + yTop;
         //creating a new random ball with the random starting point
         Ball ball = new Ball(new Point(x, y), radius * 5, new Color(rnd.nextInt(256),
                 rnd.nextInt(256), rnd.nextInt(256)));
@@ -61,7 +61,7 @@ public class MultipleBouncingBallsAnimation {
             speed = ((double) 70) / radius;
         }
         //creating the random velocity
-        Velocity velocity = Velocity.fromAngleAndSpeed(rnd.nextDouble(361), speed);
+        Velocity velocity = Velocity.fromAngleAndSpeed(rnd.nextInt(361), speed);
         ball.setVelocity(velocity);
 
         return ball;
