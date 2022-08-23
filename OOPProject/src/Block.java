@@ -1,15 +1,17 @@
 import biuoop.DrawSurface;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Block.
  */
-public class Block implements ICollidable, Sprite {
+public class Block implements ICollidable, Sprite, HitNotifier {
 
     private Rectangle rectangle;
     private Color color;
-
+    private java.util.ArrayList<HitListener> hitListeners;
 
     /**
      * Draw on.
@@ -62,6 +64,7 @@ public class Block implements ICollidable, Sprite {
         this.rectangle = rectangle;
         this.color = color;
         rectangle.setColor(color);
+        this.hitListeners = new ArrayList<HitListener>();
     }
 
     /**
@@ -91,20 +94,62 @@ public class Block implements ICollidable, Sprite {
      * @return the velocity
      */
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         Point[] corners = this.rectangle.getPoints();
+        Velocity v = new Velocity(currentVelocity.getDx(), -currentVelocity.getDy());
         //checks for a point if it is on the rectangle sides
         if (collisionPoint.equals(corners[0]) || collisionPoint.equals(corners[1])
                 || collisionPoint.equals(corners[2]) || collisionPoint.equals(corners[3])) {
             //
-            return new Velocity(-currentVelocity.getDx(), -currentVelocity.getDy());
+            v = new Velocity(-currentVelocity.getDx(), -currentVelocity.getDy());
             //
         } else if (collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
                 + this.rectangle.getWidth() || collisionPoint.getX() == this.rectangle.getUpperLeft().getX()) {
             //
-            return new Velocity(-currentVelocity.getDx(), currentVelocity.getDy());
+            v =  new Velocity(-currentVelocity.getDx(), currentVelocity.getDy());
             //
         }
-        return new Velocity(currentVelocity.getDx(), -currentVelocity.getDy());
+        this.notifyHit(hitter);
+        return v;
+    }
+
+    /**
+     * Remove this(Block) from a game.
+     *
+     * @param game the game
+     */
+    public void removeFromGame(Game game) {
+         game.removeCollidable(this);
+         game.removeSprite(this);
+    }
+
+    /**
+     * Add hit listener.
+     *
+     * @param hl the hl
+     */
+    @Override
+    public void addHitListener(HitListener hl) {
+        this.hitListeners.add(hl);
+    }
+    private void notifyHit(Ball hitter) {
+        // Make a copy of the hitListeners before iterating over them.
+        List<HitListener> listeners = new ArrayList<>(this.hitListeners);
+        // Notify all listeners about a hit event:
+        for (HitListener hl : listeners) {
+            hl.hitEvent(this, hitter);
+        }
+    }
+
+    /**
+     * Remove hit listener.
+     *
+     * @param hl the hl
+     */
+    @Override
+    public void removeHitListener(HitListener hl) {
+        if (hl != null) {
+            this.hitListeners.remove(hl);
+        }
     }
 }

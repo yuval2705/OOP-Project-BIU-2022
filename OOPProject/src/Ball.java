@@ -72,7 +72,7 @@ public class Ball implements Sprite {
             return;
         }
         this.center = collisionInfo.collisionPoint();
-        this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(), this.velocity);
+        this.velocity = collisionInfo.collisionObject().hit(this, collisionInfo.collisionPoint(), this.velocity);
         this.center = this.velocity.applyToPoint(this.center);
     }
 
@@ -89,7 +89,7 @@ public class Ball implements Sprite {
         if (c != null) {
             //get the collision rectangle from the collision object.
             ICollidable c1 = c.collisionObject();
-            this.velocity = c1.hit(c.collisionPoint(), this.velocity);
+            this.velocity = c1.hit(this, c.collisionPoint(), this.velocity);
             Rectangle rect = c1.getCollisionRectangle();
             //
             //get the sides of the rectangle to check if or where the collision happened.
@@ -252,5 +252,14 @@ public class Ball implements Sprite {
     @Override
     public void addToGame(Game g) {
         g.addSprite(this);
+    }
+
+    /**
+     * Remove from game.
+     *
+     * @param game the game
+     */
+    public void removeFromGame(Game game) {
+        game.removeSprite(this);
     }
 }

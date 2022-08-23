@@ -99,4 +99,13 @@ public class GameEnvironment {
         //we'll return the new Collision info.
         return new CollisionInfo(closest, c1);
     }
+
+    /**
+     * Remove a collidable object.
+     *
+     * @param c the c
+     */
+    public void removeCollidable(ICollidable c) {
+        this.collidables.remove(c);
+    }
 }

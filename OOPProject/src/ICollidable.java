@@ -13,9 +13,10 @@ public interface ICollidable {
     /**
      * Hit velocity.
      *
+     * @param hitter          the hitter
      * @param collisionPoint  the collision point
      * @param currentVelocity the current velocity
      * @return the velocity
      */
-    Velocity hit(Point collisionPoint, Velocity currentVelocity);
+    Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity);
 }

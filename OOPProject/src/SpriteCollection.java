@@ -1,6 +1,7 @@
 import biuoop.DrawSurface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Sprite collection.
@@ -40,8 +41,11 @@ public class SpriteCollection {
      * Notify all time passed.
      */
     public void notifyAllTimePassed() {
-        for (Sprite s:this.sprites) {
-            s.timePassed();
+        List<Sprite> temp = new ArrayList<Sprite>(this.sprites);
+        for (Sprite s: temp) {
+            if (s != null) {
+                s.timePassed();
+            }
         }
     }
 
@@ -65,4 +69,12 @@ public class SpriteCollection {
         return this.sprites;
     }
 
+    /**
+     * Remove sprite.
+     *
+     * @param s the s
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.remove(s);
+    }
 }

@@ -17,6 +17,13 @@ public class Game {
      */
     static final int HEIGHT = 600;
 
+    private BlockRemover blockRemover;
+    private Counter blockCounter;
+
+    private BlockRemover ballRemover;
+    private Counter ballCounter;
+
+
     /**
      * The entry point of application.
      *
@@ -77,6 +84,13 @@ public class Game {
      * Initialize.
      */
     public void initialize() {
+
+        this.blockCounter = new Counter();
+        this.blockRemover = new BlockRemover(this, this.blockCounter);
+
+        this.ballCounter = new Counter();
+        this.ballRemover = new BlockRemover(this, this.ballCounter);
+
         int blockWidth = 50;
         int blockHeight = 25;
         int sidesSmall = 20;
@@ -84,6 +98,7 @@ public class Game {
         int ballRadius = 4;
         //
         Ball ball = new Ball(100, 100, ballRadius, Color.BLACK);
+        this.ballCounter.increase(1);
         ball.setVelocity(ballVelocity, ballVelocity);
         ball.setGameEnvironment(this.environment);
         //
@@ -97,6 +112,8 @@ public class Game {
                         (HEIGHT / 2) - (i + 1) * blockHeight), blockWidth, blockHeight);
                 Block block = new Block(rect, colors[i]);
                 block.addToGame(this);
+                this.blockCounter.increase(1);
+                block.addHitListener(this.blockRemover);
             }
         }
         //creating the borders
@@ -106,7 +123,9 @@ public class Game {
         Rectangle bottom = new Rectangle(new Point(0, HEIGHT - 25), WIDTH, 25);
         Color color = Color.GRAY;
         //
-        (new Block(bottom, color)).addToGame(this);
+        Block deathZone = new Block(bottom, color);
+        deathZone.addHitListener(this.ballRemover);
+        (deathZone).addToGame(this);
         (new Block(left, color)).addToGame(this);
         (new Block(right, color)).addToGame(this);
         (new Block(top, color)).addToGame(this);
@@ -129,10 +148,11 @@ public class Game {
 
         int framesPerSecond = 60;
         int millisecondsPerFrame = 1000 / framesPerSecond;
-        while (true) {
+        DrawSurface d;
+        while (this.blockCounter.getValue() > 10 && this.ballCounter.getValue() > 0) {
             long startTime = System.currentTimeMillis(); // timing
 
-            DrawSurface d = gui.getDrawSurface();
+            d = gui.getDrawSurface();
             this.sprites.drawAllOn(d);
             gui.show(d);
             this.sprites.notifyAllTimePassed();
@@ -144,5 +164,25 @@ public class Game {
                 sleeper.sleepFor(milliSecondLeftToSleep);
             }
         }
+        d = gui.getDrawSurface();
+        gui.close();
+    }
+
+    /**
+     * Remove a collidable object.
+     *
+     * @param c the c
+     */
+    public void removeCollidable(ICollidable c) {
+        this.environment.removeCollidable(c);
+    }
+
+    /**
+     * Remove a sprite object.
+     *
+     * @param s the s
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.removeSprite(s);
     }
 }

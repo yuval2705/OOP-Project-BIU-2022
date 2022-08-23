@@ -83,7 +83,7 @@ public class Paddle implements Sprite, ICollidable {
      * @return the velocity
      */
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         if (collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
                 || collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
                 + this.rectangle.getWidth()) {
