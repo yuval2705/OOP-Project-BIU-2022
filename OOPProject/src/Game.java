@@ -1,6 +1,5 @@
 import biuoop.DrawSurface;
 import biuoop.GUI;
-import biuoop.Sleeper;
 
 import java.awt.Color;
 import java.util.Random;
@@ -8,7 +7,7 @@ import java.util.Random;
 /**
  * The type Game.
  */
-public class Game {
+public class Game implements Animation {
     /**
      * The Width.
      */
@@ -48,17 +47,8 @@ public class Game {
     private ScoreTrackingListener scoreTrackingListener;
     private Counter score;
 
-
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.initialize();
-        game.run();
-    }
+    private boolean running;
+    private AnimationRunner runner;
     private SpriteCollection sprites;
     private  GameEnvironment environment;
 
@@ -77,6 +67,9 @@ public class Game {
      * Instantiates a new Game.
      */
     public Game() {
+        this.running = false;
+        this.runner = new AnimationRunner();
+        //
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
 
@@ -119,7 +112,16 @@ public class Game {
      *
      * @param number the number
      */
-    public void initializeBalls(int number) {
+    public void initializeBallsAndPaddle(int number) {
+        int paddleHeight = 10;
+        int paddleWidth = 70;
+        Point paddleStart = new Point((WIDTH - paddleWidth) / 2, 565);
+        //
+        GUI gui = new GUI("Arkanoid", WIDTH, HEIGHT);
+        Paddle paddle = new Paddle(gui.getKeyboardSensor(),
+                new Rectangle(paddleStart, paddleWidth, paddleHeight), Color.YELLOW, 6);
+        paddle.addToGame(this);
+
         Random rnd = new Random();
         for (int i = 0; i < number; i++) {
             Ball ball = new Ball(100, 100, BALL_RADIUS, Color.BLACK);
@@ -129,6 +131,8 @@ public class Game {
             ball.setVelocity(v);
             ball.setGameEnvironment(this.environment);
         }
+
+
     }
 
     /**
@@ -178,7 +182,7 @@ public class Game {
         // creating the score
         ScoreIndicator scoreIndicator = new ScoreIndicator(this.score);
         // creating the balls
-        initializeBalls(3);
+        //initializeBallsAndPaddle(3);
         // creating the blocks
         initializeBlocks();
         // creating the borders
@@ -191,43 +195,11 @@ public class Game {
      * Run.
      */
     public void run() {
-        int paddleHeight = 10;
-        int paddleWidth = 70;
-        Point paddleStart = new Point((WIDTH - paddleWidth) / 2, 565);
-        //
-        GUI gui = new GUI("Arkanoid", WIDTH, HEIGHT);
-        Paddle paddle = new Paddle(gui.getKeyboardSensor(),
-                new Rectangle(paddleStart, paddleWidth, paddleHeight), Color.YELLOW, 6);
-        paddle.addToGame(this);
-        //
-        Sleeper sleeper = new Sleeper();
-
-        int framesPerSecond = 60;
-        int millisecondsPerFrame = 1000 / framesPerSecond;
-        DrawSurface d;
-        while (this.ballCounter.getValue() > 0) {
-            //checks if all the blocks are gone
-            if (this.blockCounter.getValue() <= 0) {
-                this.score.increase(100);
-                //creating all the blocks again
-                this.initializeBlocks();
-                this.initializeBalls(1);
-            }
-            long startTime = System.currentTimeMillis(); // timing
-
-            d = gui.getDrawSurface();
-            this.sprites.drawAllOn(d);
-            gui.show(d);
-            this.sprites.notifyAllTimePassed();
-            // timing
-            long usedTime = System.currentTimeMillis() - startTime;
-            long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
-            if (milliSecondLeftToSleep > 0) {
-                sleeper.sleepFor(milliSecondLeftToSleep);
-            }
-        }
-        d = gui.getDrawSurface();
-        gui.close();
+        this.initializeBallsAndPaddle(3); // or a similar method
+        this.running = true;
+        // use our runner to run the current animation -- which is one turn of
+        // the game.
+        this.runner.run(this);
     }
 
     /**
@@ -246,5 +218,34 @@ public class Game {
      */
     public void removeSprite(Sprite s) {
         this.sprites.removeSprite(s);
+    }
+
+    /**
+     * Do one frame.
+     *
+     * @param d the d
+     */
+    @Override
+    public void doOneFrame(DrawSurface d) {
+        if (this.blockCounter.getValue() <= 0) {
+            this.score.increase(100);
+            this.running = false;
+        }
+
+        if (this.ballCounter.getValue() <= 0) {
+            this.running = false;
+        }
+        this.sprites.drawAllOn(d);
+        this.sprites.notifyAllTimePassed();
+    }
+
+    /**
+     * Should stop boolean.
+     *
+     * @return the boolean
+     */
+    @Override
+    public boolean shouldStop() {
+        return !this.running;
     }
 }
