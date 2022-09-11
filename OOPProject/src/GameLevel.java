@@ -1,5 +1,5 @@
 import biuoop.DrawSurface;
-import biuoop.GUI;
+import biuoop.KeyboardSensor;
 
 import java.awt.Color;
 import java.util.Random;
@@ -51,6 +51,7 @@ public class Game implements Animation {
     private AnimationRunner runner;
     private SpriteCollection sprites;
     private  GameEnvironment environment;
+    private KeyboardSensor keyBoard;
 
     /**
      * Instantiates a new Game.
@@ -81,6 +82,7 @@ public class Game implements Animation {
 
         this.score = new Counter();
         this.scoreTrackingListener = new ScoreTrackingListener(this.score);
+        this.keyBoard = this.runner.getGui().getKeyboardSensor();
     }
 
     /**
@@ -117,8 +119,7 @@ public class Game implements Animation {
         int paddleWidth = 70;
         Point paddleStart = new Point((WIDTH - paddleWidth) / 2, 565);
         //
-        GUI gui = new GUI("Arkanoid", WIDTH, HEIGHT);
-        Paddle paddle = new Paddle(gui.getKeyboardSensor(),
+        Paddle paddle = new Paddle(this.keyBoard,
                 new Rectangle(paddleStart, paddleWidth, paddleHeight), Color.YELLOW, 6);
         paddle.addToGame(this);
 
@@ -227,6 +228,9 @@ public class Game implements Animation {
      */
     @Override
     public void doOneFrame(DrawSurface d) {
+        if (this.keyBoard.isPressed("p")) {
+            this.runner.run(new PauseScreen(this.keyBoard));
+        }
         if (this.blockCounter.getValue() <= 0) {
             this.score.increase(100);
             this.running = false;
