@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CheckStyle-IDEA" serialisationVersion="2">
-    <checkstyleVersion>10.3.1</checkstyleVersion>
+    <checkstyleVersion>10.3.2</checkstyleVersion>
     <scanScope>JavaOnly</scanScope>
     <option name="thirdPartyClasspath" />
     <option name="activeLocationIds">
-      <option value="cca87da5-7014-4460-9530-2af14cddf8d6" />
+      <option value="9c4fbfd7-c232-42da-a8d4-f4b5eae1ad8e" />
     </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="cca87da5-7014-4460-9530-2af14cddf8d6" type="LOCAL_FILE" scope="All" description="biuoop">
-          $USER_HOME$/Desktop/biuoop.xml
+          $PROJECT_DIR$/../../../biuoop.xml
+          <option name="properties">
+            <map>
+              <entry key="org.checkstyle.sun.suppressionfilter.config" value="" />
+              <entry key="org.checkstyle.sun.suppressionxpathfilter.config" value="" />
+            </map>
+          </option>
+        </ConfigurationLocation>
+        <ConfigurationLocation id="9c4fbfd7-c232-42da-a8d4-f4b5eae1ad8e" type="LOCAL_FILE" scope="All" description="ככ">
+          $PROJECT_DIR$/biuoop.xml
           <option name="properties">
             <map>
               <entry key="org.checkstyle.sun.suppressionfilter.config" value="" />

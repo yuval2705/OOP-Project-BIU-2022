@@ -2,17 +2,17 @@
  * The type Ball remover.
  */
 public class BallRemover implements HitListener {
-    private Game game;
+    private GameLevel gameLevel;
     private Counter counter;
 
     /**
      * Instantiates a new Ball remover.
      *
-     * @param game    the game
+     * @param gameLevel    the game
      * @param counter the counter
      */
-    public BallRemover(Game game, Counter counter) {
-        this.game = game;
+    public BallRemover(GameLevel gameLevel, Counter counter) {
+        this.gameLevel = gameLevel;
         this.counter = counter;
     }
     /**
@@ -26,6 +26,6 @@ public class BallRemover implements HitListener {
     @Override
     public void hitEvent(Block beingHit, Ball hitter) {
         this.counter.decrease(1);
-        hitter.removeFromGame(this.game);
+        hitter.removeFromGame(this.gameLevel);
     }
 }

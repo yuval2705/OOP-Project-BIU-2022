@@ -125,7 +125,7 @@ public class Paddle implements Sprite, ICollidable {
      * @param g the g
      */
     @Override
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
         g.addColidable(this);
     }

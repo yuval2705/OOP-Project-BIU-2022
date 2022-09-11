@@ -23,5 +23,5 @@ public interface Sprite {
      *
      * @param g the g
      */
-    void addToGame(Game g);
+    void addToGame(GameLevel g);
 }

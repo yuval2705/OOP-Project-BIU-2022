@@ -250,16 +250,16 @@ public class Ball implements Sprite {
     }
 
     @Override
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
     }
 
     /**
      * Remove from game.
      *
-     * @param game the game
+     * @param gameLevel the game
      */
-    public void removeFromGame(Game game) {
-        game.removeSprite(this);
+    public void removeFromGame(GameLevel gameLevel) {
+        gameLevel.removeSprite(this);
     }
 }

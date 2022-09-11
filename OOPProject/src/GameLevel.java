@@ -2,12 +2,18 @@ import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
 
 import java.awt.Color;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * The type Game.
  */
-public class Game implements Animation {
+public class GameLevel implements Animation {
+    public static final int BALL_VELOCITY = 5;
+    public static final int PADDLE_VELOCITY = 7;
+    /**
+     * The Fps.
+     */
+    static final int FPS = 60;
     /**
      * The Width.
      */
@@ -17,27 +23,11 @@ public class Game implements Animation {
      */
     static final int HEIGHT = 600;
 
+    static final int BLOCK_HEIGHT = 29;
     /**
      * The Ball radius.
      */
     static final int BALL_RADIUS = 4;
-
-    /**
-     * The Starting ball speed.
-     */
-    static final int STARTING_BALL_SPEED = 4;
-    /**
-     * The Block width.
-     */
-    static final int BLOCK_WIDTH = 50;
-    /**
-     * The Block height.
-     */
-    static final int BLOCK_HEIGHT = 25;
-    /**
-     * The Small side.
-     */
-    static final int SMALL_SIDE = 20;
     private BlockRemover blockRemover;
     private Counter blockCounter;
 
@@ -52,24 +42,20 @@ public class Game implements Animation {
     private SpriteCollection sprites;
     private  GameEnvironment environment;
     private KeyboardSensor keyBoard;
+    private LevelNameSprite levelNameSprite;
 
+    private LevelInformation levelInformation;
     /**
      * Instantiates a new Game.
      *
-     * @param sprites     the sprites
-     * @param environment the environment
+     * @param levelInformation the level information
+     * @param ks               the ks
+     * @param ar               the ar
+     * @param score            the score
      */
-    public Game(SpriteCollection sprites, GameEnvironment environment) {
-        this.sprites = sprites;
-        this.environment = environment;
-    }
-
-    /**
-     * Instantiates a new Game.
-     */
-    public Game() {
-        this.running = false;
-        this.runner = new AnimationRunner();
+    public GameLevel(LevelInformation levelInformation, KeyboardSensor ks, AnimationRunner ar, Counter score) {
+        this.running = true;
+        this.runner = ar;
         //
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
@@ -80,9 +66,10 @@ public class Game implements Animation {
         this.ballCounter = new Counter();
         this.ballRemover = new BallRemover(this, this.ballCounter);
 
-        this.score = new Counter();
+        this.score = score;
         this.scoreTrackingListener = new ScoreTrackingListener(this.score);
-        this.keyBoard = this.runner.getGui().getKeyboardSensor();
+        this.keyBoard = ks;
+        this.levelInformation = levelInformation;
     }
 
     /**
@@ -111,51 +98,39 @@ public class Game implements Animation {
 
     /**
      * Initialize balls.
-     *
-     * @param number the number
      */
-    public void initializeBallsAndPaddle(int number) {
+    public void initializeBallsAndPaddle() {
         int paddleHeight = 10;
-        int paddleWidth = 70;
+        int paddleWidth = this.levelInformation.paddleWidth();
         Point paddleStart = new Point((WIDTH - paddleWidth) / 2, 565);
         //
         Paddle paddle = new Paddle(this.keyBoard,
-                new Rectangle(paddleStart, paddleWidth, paddleHeight), Color.YELLOW, 6);
+                new Rectangle(paddleStart, paddleWidth, paddleHeight), Color.YELLOW,
+                this.levelInformation.paddleSpeed());
         paddle.addToGame(this);
 
-        Random rnd = new Random();
-        for (int i = 0; i < number; i++) {
-            Ball ball = new Ball(100, 100, BALL_RADIUS, Color.BLACK);
+        ArrayList<Velocity> ballVelocities = new ArrayList<Velocity>(this.levelInformation.initialBallVelocities());
+        for (Velocity v: ballVelocities) {
+            Ball ball = new Ball(paddleStart.getX(), HEIGHT - (paddleHeight + 40), BALL_RADIUS, Color.BLACK);
             ball.addToGame(this);
             this.ballCounter.increase(1);
-            Velocity v = Velocity.fromAngleAndSpeed(100 + rnd.nextInt(81), STARTING_BALL_SPEED);
             ball.setVelocity(v);
             ball.setGameEnvironment(this.environment);
         }
-
-
     }
 
     /**
      * Initialize blocks.
      */
     public void initializeBlocks() {
-        //the color of the blocks
-        Color[] colors = {Color.GREEN, Color.PINK, Color.CYAN, Color.YELLOW, Color.RED, Color.GRAY};
+        ArrayList<Block> temp = new ArrayList<Block>(this.levelInformation.blocks());
 
-        //creating the blocks
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < (7 + i); j++) {
-                Rectangle rect = new Rectangle(new Point(WIDTH - SMALL_SIDE - (j + 1) * BLOCK_WIDTH,
-                        (HEIGHT / 2) - (i + 1) * BLOCK_HEIGHT), BLOCK_WIDTH, BLOCK_HEIGHT);
-                Block block = new Block(rect, colors[i]);
-                block.addToGame(this);
-                this.blockCounter.increase(1);
-                block.addHitListener(this.blockRemover);
-                block.addHitListener(this.scoreTrackingListener);
-            }
+        for (Block block : temp) {
+            block.addToGame(this);
+            this.blockCounter.increase(1);
+            block.addHitListener(this.blockRemover);
+            block.addHitListener(this.scoreTrackingListener);
         }
-
     }
 
     /**
@@ -180,27 +155,34 @@ public class Game implements Animation {
      * Initialize.
      */
     public void initialize() {
+        this.levelNameSprite = new LevelNameSprite(this.levelInformation.levelName());
         // creating the score
         ScoreIndicator scoreIndicator = new ScoreIndicator(this.score);
         // creating the balls
-        //initializeBallsAndPaddle(3);
+        initializeBallsAndPaddle();
         // creating the blocks
         initializeBlocks();
         // creating the borders
         initializeBorders();
         // adding the score
         scoreIndicator.addToGame(this);
+        (this.levelNameSprite).addToGame(this);
     }
 
     /**
      * Run.
      */
     public void run() {
-        this.initializeBallsAndPaddle(3); // or a similar method
+        //this.initializeBallsAndPaddle(); // or a similar method
         this.running = true;
         // use our runner to run the current animation -- which is one turn of
         // the game.
         this.runner.run(this);
+
+        if (this.blockCounter.getValue() <= 0) {
+            this.score.increase(100);
+            this.running = false;
+        }
     }
 
     /**
@@ -229,13 +211,14 @@ public class Game implements Animation {
     @Override
     public void doOneFrame(DrawSurface d) {
         if (this.keyBoard.isPressed("p")) {
-            this.runner.run(new PauseScreen(this.keyBoard));
+            this.runner.run(new KeyPressStoppableAnimation(this.keyBoard,
+                    KeyboardSensor.SPACE_KEY, new PauseScreen()));
+            //
+            this.runner.run(new CountDownAnimation(2, 3, this.sprites));
         }
         if (this.blockCounter.getValue() <= 0) {
-            this.score.increase(100);
             this.running = false;
         }
-
         if (this.ballCounter.getValue() <= 0) {
             this.running = false;
         }
@@ -251,5 +234,32 @@ public class Game implements Animation {
     @Override
     public boolean shouldStop() {
         return !this.running;
+    }
+
+    /**
+     * Gets ballcounter.
+     *
+     * @return the ballcounter
+     */
+    public int getBallcounter() {
+        return this.ballCounter.getValue();
+    }
+
+    /**
+     * Gets blocks counter.
+     *
+     * @return the blocks counter
+     */
+    public int getBlocksCounter() {
+        return this.blockCounter.getValue();
+    }
+
+    /**
+     * Gets sprites.
+     *
+     * @return the sprites
+     */
+    public SpriteCollection getSprites() {
+        return this.sprites;
     }
 }

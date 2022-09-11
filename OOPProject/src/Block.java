@@ -39,7 +39,7 @@ public class Block implements ICollidable, Sprite, HitNotifier {
      * @param g the game
      */
     @Override
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addColidable(this);
         g.addSprite(this);
     }
@@ -116,11 +116,11 @@ public class Block implements ICollidable, Sprite, HitNotifier {
     /**
      * Remove this(Block) from a game.
      *
-     * @param game the game
+     * @param gameLevel the game
      */
-    public void removeFromGame(Game game) {
-         game.removeCollidable(this);
-         game.removeSprite(this);
+    public void removeFromGame(GameLevel gameLevel) {
+         gameLevel.removeCollidable(this);
+         gameLevel.removeSprite(this);
     }
 
     /**
