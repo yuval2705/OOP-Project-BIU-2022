@@ -11,11 +11,26 @@ public class Level4 implements LevelInformation {
     private KeyboardSensor keyboardSensor;
     private Sprite background;
     private List<Block> blocks;
-    private static final int NUMBER_OF_BLOCKS = 1;
-    private static final int NUMBER_OF_BALLS = 1;
-    private static final int PADDLE_SPEED = 5;
-    private static final int PADDLE_WIDTH = 80;
-    private static final String LEVEL_NAME = "Direct Hit";
+
+    private static final int NUMBER_OF_ROWS = 7;
+
+    private static final int START_OF_BLOCK_X = 25;
+
+    private static final int START_OF_BLOCK_Y = 100;
+
+    private static final int BLOCK_HEIGHT = 25;
+
+    private static final int BLOCK_WIDTH = 50;
+
+    private static final int NUMBER_OF_BLOCKS_FIRST_ROW = 15;
+    private static final int NUMBER_OF_BLOCKS = NUMBER_OF_BLOCKS_FIRST_ROW * NUMBER_OF_ROWS;
+    private static final int NUMBER_OF_BALLS = 3;
+    private static final int PADDLE_SPEED = 7;
+    private static final int PADDLE_WIDTH = 140;
+
+    private static final Color[] COLORS = {new Color(128, 128, 128), new Color(255, 0, 0), new Color(255, 255, 0),
+            new Color(0, 255, 0), new Color(255, 255, 255), new Color(255, 175, 175), new Color(0, 255, 255)};
+    private static final String LEVEL_NAME = "Final Four";
     /**
      * Instantiates a new Level 1.
      *
@@ -34,11 +49,15 @@ public class Level4 implements LevelInformation {
     }
 
     private List<Block> createBlocks() {
-        Rectangle rect = new Rectangle(new Point(GameLevel.WIDTH / 2, GameLevel.HEIGHT / 2),
-                GameLevel.BLOCK_HEIGHT, GameLevel.BLOCK_HEIGHT);
-        Block b = new Block(rect, Color.RED);
-        List<Block> blocks = new ArrayList<Block>();
-        blocks.add(b);
+        List<Block> blocks = new ArrayList<>();
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_BLOCKS_FIRST_ROW; j++) {
+                Rectangle rect1 = new Rectangle(new Point(START_OF_BLOCK_X + (j * BLOCK_WIDTH),
+                        START_OF_BLOCK_Y + (i * BLOCK_HEIGHT)), BLOCK_WIDTH, BLOCK_HEIGHT);
+                Block block = new Block(rect1, COLORS[i]);
+                blocks.add(blocks.size(), block);
+            }
+        }
         return blocks;
     }
 
@@ -61,8 +80,13 @@ public class Level4 implements LevelInformation {
     @Override
     public List<Velocity> initialBallVelocities() {
         List<Velocity> velocities = new ArrayList<Velocity>();
-        Velocity v = new Velocity(0, -GameLevel.BALL_VELOCITY);
+        Velocity v = Velocity.fromAngleAndSpeed(315, GameLevel.BALL_VELOCITY);
         velocities.add(v);
+        v = Velocity.fromAngleAndSpeed(10, GameLevel.BALL_VELOCITY);
+        velocities.add(v);
+        v = Velocity.fromAngleAndSpeed(45, GameLevel.BALL_VELOCITY);
+        velocities.add(v);
+
         return velocities;
     }
     /**

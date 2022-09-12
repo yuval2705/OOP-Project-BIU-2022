@@ -21,8 +21,8 @@ public class Level2 implements LevelInformation {
     private static final int START_ANGLE = 310;
     private static final int ANGLE_JUMP = 10;
     private static final int NUMBER_OF_BALLS = 10;
-    private static final int PADDLE_SPEED = 2;
-    private static final int PADDLE_WIDTH = 300;
+    private static final int PADDLE_SPEED = 5;
+    private static final int PADDLE_WIDTH = 400;
     private static final String LEVEL_NAME = "Wide easy";
     /**
      * Instantiates a new Level 1.

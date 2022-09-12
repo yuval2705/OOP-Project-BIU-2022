@@ -63,7 +63,7 @@ public class Level1 implements LevelInformation {
     public List<Velocity> initialBallVelocities() {
         Random rnd = new Random();
         List<Velocity> velocities = new ArrayList<Velocity>();
-        Velocity v = Velocity.fromAngleAndSpeed(rnd.nextDouble(140) + 10, GameLevel.BALL_VELOCITY);
+        Velocity v = Velocity.fromAngleAndSpeed(45, GameLevel.BALL_VELOCITY);
         velocities.add(v);
         return new ArrayList<>(velocities);
     }

@@ -11,11 +11,23 @@ public class Level3 implements LevelInformation {
     private KeyboardSensor keyboardSensor;
     private Sprite background;
     private List<Block> blocks;
-    private static final int NUMBER_OF_BLOCKS = 1;
-    private static final int NUMBER_OF_BALLS = 1;
+
+    private static final Color[] COLORS = {new Color(128, 128, 128), new Color(255, 0, 0),
+            new Color(255, 255, 0), new Color(0, 0, 255), new Color(255, 255, 255)};
+    private static final int NUMBER_OF_BALLS = 2;
+    private static final int NUMBER_OF_BLOCKS = 40;
+    private static final int PADDLE_WIDTH = 86;
     private static final int PADDLE_SPEED = 5;
-    private static final int PADDLE_WIDTH = 80;
-    private static final String LEVEL_NAME = "Direct Hit";
+    private static final int NUMBER_OF_ROWS = 5;
+
+    private static final int START_OF_BLOCK_X = 250 + GameLevel.BLOCK_HEIGHT;
+
+    private static final int START_OF_BLOCK_Y = 150;
+
+    private static final int BLOCK_HEIGHT = 25;
+    private static final int BLOCK_WIDTH = 50;
+    private static final int NUMBER_OF_BLOCKS_FIRST_ROW = 10;
+    private static final String LEVEL_NAME = "Green 3";
     /**
      * Instantiates a new Level 1.
      *
@@ -34,11 +46,16 @@ public class Level3 implements LevelInformation {
     }
 
     private List<Block> createBlocks() {
-        Rectangle rect = new Rectangle(new Point(GameLevel.WIDTH / 2, GameLevel.HEIGHT / 2),
-                GameLevel.BLOCK_HEIGHT, GameLevel.BLOCK_HEIGHT);
-        Block b = new Block(rect, Color.RED);
         List<Block> blocks = new ArrayList<Block>();
-        blocks.add(b);
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = i; j < NUMBER_OF_BLOCKS_FIRST_ROW; j++) {
+                Rectangle rect = new Rectangle(new Point(START_OF_BLOCK_X + j * BLOCK_WIDTH,
+                        START_OF_BLOCK_Y + i * BLOCK_HEIGHT), BLOCK_WIDTH,
+                        BLOCK_HEIGHT);
+                Block b = new Block(rect, COLORS[i]);
+                blocks.add(blocks.size(), b);
+            }
+        }
         return blocks;
     }
 
@@ -61,7 +78,9 @@ public class Level3 implements LevelInformation {
     @Override
     public List<Velocity> initialBallVelocities() {
         List<Velocity> velocities = new ArrayList<Velocity>();
-        Velocity v = new Velocity(0, -GameLevel.BALL_VELOCITY);
+        Velocity v = Velocity.fromAngleAndSpeed(315, GameLevel.BALL_VELOCITY);
+        velocities.add(v);
+        v = Velocity.fromAngleAndSpeed(45, GameLevel.BALL_VELOCITY);
         velocities.add(v);
         return velocities;
     }

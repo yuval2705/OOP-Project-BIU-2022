@@ -8,23 +8,6 @@ import java.util.List;
  * The type Ass 6 game.
  */
 public class Ass6Game {
-
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main1(String[] args) {
-        GUI gui = new GUI(GameFlow.PROGRAM_NAME, GameLevel.WIDTH, GameLevel.HEIGHT);
-        KeyboardSensor keyboardSensor = gui.getKeyboardSensor();
-        List<LevelInformation> lst = new ArrayList<LevelInformation>();
-        LevelInformation levelInformation1 = new Level1(keyboardSensor);
-        lst.add(lst.size(), levelInformation1);
-        AnimationRunner animationRunner = new AnimationRunner(gui);
-        GameFlow gameFlow = new GameFlow(animationRunner, keyboardSensor, gui);
-        gameFlow.runLevels(lst);
-    }
-
     /**
      * The entry point of application.
      *
